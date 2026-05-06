@@ -1,0 +1,162 @@
+import nltk
+from nltk.chat.util import Chat, reflections
+
+# Define patterns and responses
+pairs = [
+    [r"hi|hello|hey", ["Hello!", "Hi there!"]],
+    
+    [r"(.*) price (.*)", 
+     ["Our products start from ₹999.", "Price depends on the product."]],
+    
+    [r"(.*) refund (.*)", 
+     ["Refund is available within 7 days.", "You can request refund via support."]],
+    
+    [r"(.*) delivery (.*)", 
+     ["Delivery takes 3-5 business days."]],
+    
+    [r"(.*) your name ?", 
+     ["I am a chatbot created for customer support."]],
+    
+    [r"bye", 
+     ["Goodbye! Have a nice day."]],
+    
+    [r"(.*)", 
+     ["Sorry, I didn't understand that."]]
+]
+
+def start_chat():
+    print("Chatbot started (type 'bye' to exit)\n")
+    chat = Chat(pairs, reflections)
+    chat.converse()
+
+start_chat()
+--------------------------------------rule based chatbot ends here---------------------------------------------------------------------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Support Chatbot</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f0f0f0;
+        }
+        #container {
+            width: 400px;
+            margin: auto;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        #chat {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .user { color: blue; }
+        .bot { color: green; }
+        input {
+            width: 75%;
+            padding: 8px;
+        }
+        button {
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <h2>Customer Support Chatbot</h2>
+
+    <div id="chat"></div>
+
+    <input type="text" id="msg" placeholder="Type message...">
+    <button onclick="reply()">Send</button>
+</div>
+
+<script>
+function getBotResponse(input) {
+    input = input.toLowerCase();
+
+    if (input.includes("hello") || input.includes("hi"))
+        return "Hello! How can I assist you?";
+    else if (input.includes("price"))
+        return "Our product starts from ₹999.";
+    else if (input.includes("refund"))
+        return "Refund is available within 7 days.";
+    else if (input.includes("delivery"))
+        return "Delivery takes 3-5 business days.";
+    else if (input.includes("contact"))
+        return "You can contact us at support@email.com.";
+    else if (input.includes("bye"))
+        return "Goodbye! Have a great day!";
+    else
+        return "Sorry, I didn't understand that.";
+}
+
+function reply() {
+    let msg = document.getElementById("msg").value;
+    if (msg === "") return;
+
+    let response = getBotResponse(msg);
+
+    let chat = document.getElementById("chat");
+
+    chat.innerHTML += "<p class='user'><b>You:</b> " + msg + "</p>";
+    chat.innerHTML += "<p class='bot'><b>Bot:</b> " + response + "</p>";
+
+    chat.scrollTop = chat.scrollHeight;
+    document.getElementById("msg").value = "";
+}
+</script>
+
+</body>
+</html>
+------------------------------------------------------------------------gui based chatbot ends here-------------------------------------------------------------------------
+
+
+def diagnose(symptoms):
+    score = 0
+
+    # scoring system
+    if symptoms["fever"]:
+        score += 3
+    if symptoms["cough"]:
+        score += 2
+    if symptoms["headache"]:
+        score += 1
+    if symptoms["fatigue"]:
+        score += 2
+    if symptoms["breathing"]:
+        score += 3
+
+    # decision logic
+    if score >= 8:
+        return "High risk: Possible Severe Infection (Consult doctor immediately)"
+    elif score >= 5:
+        return "Moderate risk: Flu or Viral Infection"
+    elif score >= 2:
+        return "Mild symptoms: Take rest and hydration"
+    else:
+        return "You are likely healthy"
+
+def main():
+    print("=== Medical Expert System ===")
+    print("Answer with 1 (Yes) or 0 (No)\n")
+
+    symptoms = {}
+
+    symptoms["fever"] = int(input("Do you have fever? "))
+    symptoms["cough"] = int(input("Do you have cough? "))
+    symptoms["headache"] = int(input("Do you have headache? "))
+    symptoms["fatigue"] = int(input("Do you feel fatigue? "))
+    symptoms["breathing"] = int(input("Do you have breathing difficulty? "))
+
+    result = diagnose(symptoms)
+
+    print("\nDiagnosis:", result)
+
+main()
+
+-----------------------------------------------------------------------------expert systems ends here----------------------------------------------------------------------
