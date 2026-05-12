@@ -1,0 +1,35 @@
+public class BankManagement {
+    public static void addCustomer(Integer CustID,String CustName,String CustEm,Date CustDate,String CustDept){
+        Bank__c cust = new Bank__c();
+        cust.Customer_ID__c=CustID;
+        cust.Name=CustName;
+        cust.Birth_Date__c=CustDate;
+        cust.Email__c=CustEm;
+        cust.Department__c=CustDept;
+        insert cust;
+        System.debug('customer added successfully!');
+    }
+    public static void displayCustomer(){
+        List<Bank__c>cust=[SELECT Customer_ID__c,Name,Email__c,Birth_Date__c,Department__c FROM Bank__c];
+        for(Bank__c c:cust){
+            System.debug('---------------------');
+            System.debug('Customer ID:'+c.Customer_ID__c);
+            System.debug('Customer Name:'+c.Name);
+            System.debug('Customer Email:'+c.Email__c);
+            System.debug('Customer BirthDate:'+c.Birth_Date__c);
+            System.debug('Customer Dept:'+c.Department__c);
+        }
+        System.debug('customer shown successfully!');
+    }
+    public static void updateCustomer(String CustName,String CustDept){
+        Bank__c c=[SELECT Customer_ID__c,Department__c FROM Bank__c WHERE Name=:CustName LIMIT 1];
+        c.Department__c=CustDept;
+        update c;
+        System.debug('customer updated successfully!');
+    }
+    public static void delCustomer(String CustName){
+        Bank__c c=[SELECT Customer_ID__c FROM Bank__c WHERE Name=:CustName LIMIT 1];
+        delete c;
+        System.debug('customer deleted successfully!');
+    }
+}

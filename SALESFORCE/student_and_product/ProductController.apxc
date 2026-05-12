@@ -1,0 +1,26 @@
+public class ProductController {
+    public Product__c prod{get; set;}
+    public List<Product__c> prodList{get; set;}
+    public ProductController(){
+        prod = new Product__c();
+        prodList = [SELECT Id,Name,Serial_No__c,Manufacture_Date__c,Expiry_Date__c from Product__c];
+    }
+    public PageReference saveProd(){
+        try{
+            insert prod;
+            ApexPages.addMessage(
+            new ApexPages.Message(
+            ApexPages.Severity.CONFIRM,
+            'Added Successfully'));
+            prod = new Product__c();
+            prodList = [SELECT Id,Name,Serial_No__c,Manufacture_Date__c,Expiry_Date__c from Product__c];
+        }
+        catch(Exception e){
+            ApexPages.addMessage(
+                new ApexPages.Message(
+                ApexPages.Severity.ERROR,
+                e.getMessage()));
+        }
+        return null;
+    }
+}

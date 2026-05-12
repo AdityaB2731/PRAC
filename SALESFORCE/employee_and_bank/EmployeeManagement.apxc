@@ -1,0 +1,35 @@
+public class EmployeeManagement {
+    public static void addEmployee(Integer empId,String empName,String empEmail,Date birthDate,String empDept){
+        Employee__c emp = new Employee__c();
+        emp.Emp_ID__c=empId;
+        emp.Name=empName;
+        emp.Email__c=empEmail;
+        emp.Birth_Date__c=birthDate;
+        emp.Department__c=empDept;
+        insert emp;
+        System.debug('employee added successfully!');
+    }
+    public static void displayEmployee(){
+        List<Employee__c> empList=[SELECT Emp_Id__c,Name,Email__c,Birth_Date__c,Department__c FROM employee__c];
+        for(Employee__c e:empList){
+            System.debug('---------------------');
+            System.debug('Employee ID:'+e.Emp_ID__c);
+            System.debug('Employee Name:'+e.Name);
+            System.debug('Employee Email:'+e.Email__c);
+            System.debug('Employee Birth Date:'+e.Birth_Date__c);
+            System.debug('Employee Dept:'+e.Department__c);
+        }
+        System.debug('employee shown successfully!');
+    }
+    public static void updateEmployee(String emName,String emDept){
+        Employee__c emp=[SELECT Emp_Id__c,Department__c FROM Employee__c WHERE Name =:emName LIMIT 1];
+        emp.Department__c=emDept;
+        update emp;
+        System.debug('employee updated successfully!');
+    }
+    public static void delEmployee(String emName){
+        Employee__c emp=[SELECT Emp_Id__c FROM Employee__c WHERE Name =:emName LIMIT 1];
+        delete emp;
+        System.debug('employee deleted successfully!');
+    }
+}
