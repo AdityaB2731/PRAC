@@ -1,0 +1,23 @@
+public class EmailProgram {
+    public static void sendEmail(String toEmail,String subject,String body){
+        if(toEmail==null||!toEmail.contains('@')){
+            System.debug('Invalid Bro!');
+            return;
+        } 
+        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+        mail.setToAddresses(new List<String>{toEmail});
+        mail.setSubject(subject);
+        mail.setPlainTextBody(body);
+        Messaging.EmailFileAttachment attachment = new Messaging.EmailFileAttachment();
+        attachment.setFileName('sample.txt');
+        attachment.setBody(Blob.valueOf('This is a sample text file attached from Salesforce'));
+        mail.setFileAttachments(new List<Messaging.EmailFileAttachment>{attachment});
+        Messaging.SendEmailResult[] result=Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{mail});
+        if(result[0].isSuccess()){
+            System.debug('mail sent');
+        }
+        else{
+            System.debug('mail not sent');
+        }
+    }
+}

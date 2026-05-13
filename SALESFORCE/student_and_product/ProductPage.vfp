@@ -1,0 +1,24 @@
+<apex:page controller="ProductController" >
+    <apex:form >
+        <apex:pageMessages />
+        <apex:pageBlock >
+            <apex:pageBlockSection columns="1">
+                <apex:inputField value="{!prod.Name}"/>
+                <apex:inputField value="{!prod.Expiry_Date__c}"/>
+                <apex:inputField value="{!prod.Manufacture_Date__c}"/>
+                <apex:inputField value="{!prod.Serial_No__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!saveProd}"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+        <apex:pageBlock >
+            <apex:pageBlockTable value="{!prodList}" var="p">
+                <apex:column value="{!p.Name}" headerValue="Name"/>
+                <apex:column value="{!p.Expiry_Date__c}" headerValue="Expiry Date"/>
+                <apex:column value="{!p.Manufacture_Date__c}" headerValue="Manufacture Date"/>
+                <apex:column value="{!p.Serial_No__c}" headerValue="Serial No"/>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
