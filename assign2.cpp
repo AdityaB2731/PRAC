@@ -1,6 +1,7 @@
-\#include <iostream>
+#include <iostream>
 #include <vector>
 #include <queue>
+
 using namespace std;
 struct Node
 {
@@ -19,9 +20,9 @@ int main()
     cin >> n;
     cout << "Enter number of edges: ";
     cin >> e;
-    vector<vector<pair<int,int>>> adj(n);
+    vector<vector<pair<int, int>>> adj(n);
     cout << "Enter edges (source destination cost):\n";
-    for(int i = 0; i < e; i++)
+    for (int i = 0; i < e; i++)
     {
         int u, v, w;
         cin >> u >> v >> w;
@@ -30,7 +31,7 @@ int main()
     }
     vector<int> h(n);
     cout << "Enter heuristic values:\n";
-    for(int i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
         cin >> h[i];
     }
@@ -40,23 +41,32 @@ int main()
     cout << "Enter goal node: ";
     cin >> goal;
     priority_queue<Node> pq;
+    vector<bool> visited(n, false);
     pq.push({start, 0, h[start]});
     cout << "\nA* Traversal Path:\n";
-    while(!pq.empty())
+    while (!pq.empty())
     {
         Node current = pq.top();
         pq.pop();
+        if (visited[current.vertex])
+            continue;
+        visited[current.vertex] = true;
         cout << current.vertex << " ";
-        if(current.vertex == goal)
+        if (current.vertex == goal)
         {
             cout << "\nGoal Reached!\n";
+            cout << "Total Cost = " << current.g;
             break;
         }
-        for(auto neighbour : adj[current.vertex])
+        for (auto neighbour : adj[current.vertex])
         {
             int nextVertex = neighbour.first;
             int edgeCost = neighbour.second;
-            pq.push({nextVertex,current.g + edgeCost,h[nextVertex]});
+            if (!visited[nextVertex])
+            {
+                pq.push({nextVertex, current.g + edgeCost, h[nextVertex]});
+            }
+            // pq.push({nextVertex,current.g + edgeCost,h[nextVertex]});
         }
     }
     return 0;
