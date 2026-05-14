@@ -1,0 +1,51 @@
+public class EmailSenderController {
+
+    public String toAddress { get; set; }
+    public String subject { get; set; }
+    public String body { get; set; }
+    public Blob fileBody { get; set; }
+    public String fileName { get; set; }
+
+    public String message { get; set; }
+
+    // Email validation
+    public Boolean isValidEmail(String email) {
+        Pattern pattern = Pattern.compile('^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$');
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    public void sendEmail() {
+
+        // Step 1: Validate email
+        if (String.isBlank(toAddress) || !isValidEmail(toAddress)) {
+            message = 'Invalid Email Address!';
+            return;
+        }
+
+        try {
+            // Step 2: Create email object
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+
+            // Step 3: Set fields
+            mail.setToAddresses(new String[] { toAddress });
+            mail.setSubject(subject);
+            mail.setPlainTextBody(body);
+
+            // Step 4: Add attachment (optional)
+            if (fileBody != null && fileName != null) {
+                Messaging.EmailFileAttachment attachment = new Messaging.EmailFileAttachment();
+                attachment.setFileName(fileName);
+                attachment.setBody(fileBody);
+                mail.setFileAttachments(new Messaging.EmailFileAttachment[] { attachment });
+            }
+
+            // Step 5: Send email
+            Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+
+            message = 'Email Sent Successfully!';
+        } catch (Exception e) {
+            message = 'Error: ' + e.getMessage();
+        }
+    }
+}
